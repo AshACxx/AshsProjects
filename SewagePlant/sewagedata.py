@@ -76,5 +76,20 @@ with open("SewageReport.json", 'w') as f:
 df = pd.DataFrame(readings)
 
 print(df.head())
-print(df.describe())
+
+sensory_summary = df.groupby("sensor_id")["value"].agg({
+    "mean":
+    "Max":
+    "Min":
+    "Mode":
+    "STD"
+
+
+    
+    
+    
+    
+    
+    
+})
         

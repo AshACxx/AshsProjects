@@ -57,12 +57,15 @@ readings = []
 for sensor_index, sample_value in enumerate(ammonia_samples):
     for sample_index, values in enumerate(sample_value):
         reading = {
-            "sensor_id": f"NHI_{sensor_index+1}",
+            "sensor_id": f"NH3_{sensor_index+1}",
             "sample_number": sample_index+1,
-            "value:":float(values),
+            "value":float(values),
             "unit": "ppm"
 
             
         }
         readings.append(reading)
+
+with open("SewageReport.json", 'w') as f:
+    json.dump(readings, f, indent = 4) 
         

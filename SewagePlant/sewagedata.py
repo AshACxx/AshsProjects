@@ -51,9 +51,10 @@ print("")
 difference = mean[0] - mean[2]
 print(difference)
 
-
+# Created readings list to store json
 readings = []
 
+# Generate a json structure by storing values inside a dictionary (1 element)
 for sensor_index, sample_value in enumerate(ammonia_samples):
     for sample_index, values in enumerate(sample_value):
         reading = {
@@ -64,6 +65,7 @@ for sensor_index, sample_value in enumerate(ammonia_samples):
 
             
         }
+        # Appending dictionaries into a list (each dictionary is 1 element)
         readings.append(reading)
 
 with open("SewageReport.json", 'w') as f:
@@ -73,10 +75,12 @@ with open("SewageReport.json", 'w') as f:
 #       PANDAS ANALYSIS
 #==============================
 
+# Converting readings into a dataframe
 df = pd.DataFrame(readings)
 
 print(df.head())
 
+#grouped sensors and their values, applied aggregations to them
 sensor_summary = df.groupby("sensor_id")["value"].agg([
     "mean",
     "std",
@@ -87,12 +91,15 @@ sensor_summary = df.groupby("sensor_id")["value"].agg([
     "median"
 ])
 
+# Counting how much every value appears
 common_value, counts = np.unique(df["value"], return_counts= True)
+
+# Finding the max count of whichever value has the most
 value_mode = common_value[np.argmax(counts)]
 
- 
+# Mode is useless in this program
 sensor_summary["mode"] = value_mode
 
-
+# Printing sensory summary
 print(sensor_summary)
         

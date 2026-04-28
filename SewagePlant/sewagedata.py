@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import json
 
 # Number of sensors and samples
 num_sens = 5
@@ -49,3 +50,16 @@ print("")
 # Find difference between mean of sensor 1 and sensor 3
 difference = mean[0] - mean[2]
 print(difference)
+
+
+readings = []
+
+for sensor_index, sensor_value in enumerate(ammonia_samples):
+    for sample_index, value in enumerate(sensor_value):
+        reading = {
+            "sensor_id": "AMM1"{sensor_index+1},
+            "sample_number"
+
+            
+            
+        }

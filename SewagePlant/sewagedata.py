@@ -54,12 +54,15 @@ print(difference)
 
 readings = []
 
-for sensor_index, sensor_value in enumerate(ammonia_samples):
-    for sample_index, value in enumerate(sensor_value):
+for sensor_index, sample_value in enumerate(ammonia_samples):
+    for sample_index, values in enumerate(sample_value):
         reading = {
-            "sensor_id": "AMM1"{sensor_index+1},
-            "sample_number"
+            "sensor_id": f"NHI_{sensor_index+1}",
+            "sample_number": sample_index+1,
+            "value:":float(values),
+            "unit": "ppm"
 
             
-            
         }
+        readings.append(reading)
+        

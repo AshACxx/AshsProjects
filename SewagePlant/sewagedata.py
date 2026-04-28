@@ -2,104 +2,109 @@ import numpy as np
 import pandas as pd
 import json
 
-# Number of sensors and samples
+
+def generate_data(num_sens, num_samples):
+    """Generate random ammonia values between 0 and 20."""
+    np.random.seed(42)
+    ammonia_samples = np.random.uniform(0, 20, (num_sens, num_samples))
+    return ammonia_samples
+
+
+def calculate_stats(ammonia_samples):
+    """Calculate mean and standard deviation for each sensor."""
+    mean = np.mean(ammonia_samples, axis=1)
+    std = np.std(ammonia_samples, axis=1)
+    return mean, std
+
+
+def calculate_zscores(ammonia_samples, mean, std):
+    """Calculate z-scores for each sensor reading."""
+    zscore = (ammonia_samples - mean[:, np.newaxis]) / std[:, np.newaxis]
+    return zscore
+
+
+def find_outliers(zscore):
+    """Find outliers where absolute z-score is greater than 2."""
+    outlier_mask = np.abs(zscore) > 2
+    outlier_counts = np.sum(outlier_mask, axis=1)
+    sensor_most_outliers = np.argmax(outlier_counts)
+    return outlier_mask, outlier_counts, sensor_most_outliers
+
+
+def create_readings(ammonia_samples):
+    """Convert sensor data into a list of dictionaries for JSON."""
+    readings = []
+
+    for sensor_index, sample_values in enumerate(ammonia_samples):
+        for sample_index, value in enumerate(sample_values):
+            reading = {
+                "sensor_id": f"NH3_{sensor_index + 1}",
+                "sample_number": sample_index + 1,
+                "value": float(value),
+                "unit": "ppm"
+            }
+
+            readings.append(reading)
+
+    return readings
+
+
+def save_to_json(readings, filename):
+    """Save readings to a JSON file."""
+    with open(filename, "w") as f:
+        json.dump(readings, f, indent=4)
+
+
+def create_pandas_summary(readings):
+    """Create pandas DataFrame and summary statistics."""
+    df = pd.DataFrame(readings)
+
+    sensor_summary = df.groupby("sensor_id")["value"].agg([
+        "mean",
+        "std",
+        "min",
+        "max",
+        "count",
+        "sum",
+        "median"
+    ])
+
+    return df, sensor_summary
+
+
+# ==============================
+#          MAIN PROGRAM
+# ==============================
+
 num_sens = 5
 num_samples = 1800
 
-# Makes the random values the same every time the code runs
-np.random.seed(42)
+ammonia_samples = generate_data(num_sens, num_samples)
 
-# Generate random ammonia values between 0 and 20
-ammonia_samples = np.random.uniform(20, 0, (num_sens, num_samples))
+mean, std = calculate_stats(ammonia_samples)
 
-# Print each sensor number and its readings
-for x, y in enumerate(ammonia_samples):
-    print(f"Sensor {x + 1}: {y}")
+zscore = calculate_zscores(ammonia_samples, mean, std)
 
-# Calculate mean for each sensor
-mean = np.mean(ammonia_samples, axis=1)
+outlier_mask, outlier_counts, sensor_most_outliers = find_outliers(zscore)
 
-# Calculate standard deviation for each sensor
-std = np.std(ammonia_samples, axis=1)
+readings = create_readings(ammonia_samples)
 
-# Calculate z-scores for each sensor reading
-zscore = (ammonia_samples - mean[:, np.newaxis]) / std[:, np.newaxis]
+save_to_json(readings, "SewageReport.json")
 
-print("")
-print(zscore)
+df, sensor_summary = create_pandas_summary(readings)
 
-# Create a mask where True means the value is an outlier
-outlier_mask = np.abs(zscore) > 2
+print("Outlier counts per sensor:")
+print(outlier_counts)
 
-# Count how many outliers each sensor has
-most_outlier = np.sum(outlier_mask, axis=1)
-
-# Find the index of the sensor with the most outliers
-sensor_most_outliers = np.argmax(most_outlier)
-
-print("")
-
-# Print number of outliers for each sensor
-print(most_outlier)
-
-# Print sensor with most outliers
+print("\nSensor with most outliers:")
 print(sensor_most_outliers + 1)
 
-print("")
-
-# Find difference between mean of sensor 1 and sensor 3
+print("\nDifference between sensor 1 mean and sensor 3 mean:")
 difference = mean[0] - mean[2]
 print(difference)
 
-# Created readings list to store json
-readings = []
-
-# Generate a json structure by storing values inside a dictionary (1 element)
-for sensor_index, sample_value in enumerate(ammonia_samples):
-    for sample_index, values in enumerate(sample_value):
-        reading = {
-            "sensor_id": f"NH3_{sensor_index+1}",
-            "sample_number": sample_index+1,
-            "value":float(values),
-            "unit": "ppm"
-
-            
-        }
-        # Appending dictionaries into a list (each dictionary is 1 element)
-        readings.append(reading)
-
-with open("SewageReport.json", 'w') as f:
-    json.dump(readings, f, indent = 4)
-    
-#==============================
-#       PANDAS ANALYSIS
-#==============================
-
-# Converting readings into a dataframe
-df = pd.DataFrame(readings)
-
+print("\nFirst 5 rows of DataFrame:")
 print(df.head())
 
-#grouped sensors and their values, applied aggregations to them
-sensor_summary = df.groupby("sensor_id")["value"].agg([
-    "mean",
-    "std",
-    "min",
-    "max",
-    "count",
-    "sum",
-    "median"
-])
-
-# Counting how much every value appears
-common_value, counts = np.unique(df["value"], return_counts= True)
-
-# Finding the max count of whichever value has the most
-value_mode = common_value[np.argmax(counts)]
-
-# Mode is useless in this program
-sensor_summary["mode"] = value_mode
-
-# Printing sensory summary
+print("\nSensor Summary:")
 print(sensor_summary)
-        

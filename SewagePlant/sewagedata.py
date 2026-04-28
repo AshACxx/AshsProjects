@@ -15,6 +15,21 @@ std = np.std(ammonia_samples, axis = 1)
 
 zscore = (ammonia_samples - mean[:, np.newaxis]) / std[:, np.newaxis]
 
+print("")
+print(zscore)
+
+outlier_mask = np.abs(zscore) > 2
+most_outlier = np.sum(outlier_mask, axis =1)
+sensor_most_outliers = np.argmax(most_outlier)
+
+print("")
+
+print(most_outlier)
+print(sensor_most_outliers)
+
+print("")
+difference = mean[0] - mean[2]
+print(difference)
 
 
 

@@ -67,5 +67,5 @@ for sensor_index, sample_value in enumerate(ammonia_samples):
         readings.append(reading)
 
 with open("SewageReport.json", 'w') as f:
-    json.dump(readings, f, indent = 4) 
+    json.dump(readings, f, indent = 4)
         

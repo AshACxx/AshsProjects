@@ -68,4 +68,13 @@ for sensor_index, sample_value in enumerate(ammonia_samples):
 
 with open("SewageReport.json", 'w') as f:
     json.dump(readings, f, indent = 4)
+    
+#==============================
+#       PANDAS ANALYSIS
+#==============================
+
+df = pd.DataFrame(readings)
+
+print(df.head())
+print(df.describe())
         

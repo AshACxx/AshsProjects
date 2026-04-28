@@ -77,19 +77,22 @@ df = pd.DataFrame(readings)
 
 print(df.head())
 
-sensory_summary = df.groupby("sensor_id")["value"].agg({
-    "mean":
-    "Max":
-    "Min":
-    "Mode":
-    "STD"
+sensor_summary = df.groupby("sensor_id")["value"].agg([
+    "mean",
+    "std",
+    "min",
+    "max",
+    "count",
+    "sum",
+    "median"
+])
+
+common_value, counts = np.unique(df["value"], return_counts= True)
+value_mode = common_value[np.argmax(counts)]
+
+ 
+sensor_summary["mode"] = value_mode
 
 
-    
-    
-    
-    
-    
-    
-})
+print(sensor_summary)
         

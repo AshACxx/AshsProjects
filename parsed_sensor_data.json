@@ -1,0 +1,211 @@
+{
+  "success": true,
+  "data": {
+    "readings": [
+      {
+        "sensor_id": "TEMP_001",
+        "timestamp": "14:32:05",
+        "sensor_type": "temperature",
+        "value": 23.5,
+        "unit": "celsius",
+        "status": "ok",
+        "notes": "sensor recalibrated yesterday"
+      },
+      {
+        "sensor_id": "HUM_003",
+        "timestamp": "14:32:07",
+        "sensor_type": "humidity",
+        "value": null,
+        "unit": null,
+        "status": "error",
+        "notes": "reading failed, timeout after 30s"
+      },
+      {
+        "sensor_id": "PRES_002",
+        "timestamp": "14:32:10",
+        "sensor_type": "pressure",
+        "value": 1013.2,
+        "unit": "hPa",
+        "status": "ok",
+        "notes": "normal range"
+      },
+      {
+        "sensor_id": "TEMP_001",
+        "timestamp": "14:32:15",
+        "sensor_type": "temperature",
+        "value": 23.7,
+        "unit": "celsius",
+        "status": "ok",
+        "notes": "battery OK (87%)"
+      },
+      {
+        "sensor_id": "TEMP_001",
+        "timestamp": "14:32:20",
+        "sensor_type": "temperature",
+        "value": 28.9,
+        "unit": "celsius",
+        "status": "warning",
+        "notes": "temperature spike detected"
+      },
+      {
+        "sensor_id": "HUM_001",
+        "timestamp": "14:32:25",
+        "sensor_type": "humidity",
+        "value": 52.3,
+        "unit": "percent",
+        "status": "ok",
+        "notes": null
+      },
+      {
+        "sensor_id": "TEMP_002",
+        "timestamp": "14:32:30",
+        "sensor_type": "temperature",
+        "value": 21.2,
+        "unit": "celsius",
+        "status": "ok",
+        "notes": "located in server room"
+      },
+      {
+        "sensor_id": "PRES_001",
+        "timestamp": "14:32:35",
+        "sensor_type": "pressure",
+        "value": 1015.8,
+        "unit": "hPa",
+        "status": "ok",
+        "notes": "NORMAL"
+      },
+      {
+        "sensor_id": "TEMP_003",
+        "timestamp": "14:32:40",
+        "sensor_type": "temperature",
+        "value": 24.1,
+        "unit": "celsius",
+        "status": "warning",
+        "notes": "battery alert - 15% charge"
+      },
+      {
+        "sensor_id": "HUM_002",
+        "timestamp": "14:32:45",
+        "sensor_type": "humidity",
+        "value": 48.7,
+        "unit": "percent",
+        "status": "ok",
+        "notes": "all systems nominal"
+      }
+    ]
+  },
+  "validation": {
+    "valid": [
+      {
+        "sensor_id": "TEMP_001",
+        "timestamp": "14:32:05",
+        "sensor_type": "temperature",
+        "value": 23.5,
+        "unit": "celsius",
+        "status": "ok",
+        "notes": "sensor recalibrated yesterday"
+      },
+      {
+        "sensor_id": "PRES_002",
+        "timestamp": "14:32:10",
+        "sensor_type": "pressure",
+        "value": 1013.2,
+        "unit": "hPa",
+        "status": "ok",
+        "notes": "normal range"
+      },
+      {
+        "sensor_id": "TEMP_001",
+        "timestamp": "14:32:15",
+        "sensor_type": "temperature",
+        "value": 23.7,
+        "unit": "celsius",
+        "status": "ok",
+        "notes": "battery OK (87%)"
+      },
+      {
+        "sensor_id": "TEMP_001",
+        "timestamp": "14:32:20",
+        "sensor_type": "temperature",
+        "value": 28.9,
+        "unit": "celsius",
+        "status": "warning",
+        "notes": "temperature spike detected"
+      },
+      {
+        "sensor_id": "HUM_001",
+        "timestamp": "14:32:25",
+        "sensor_type": "humidity",
+        "value": 52.3,
+        "unit": "percent",
+        "status": "ok",
+        "notes": null
+      },
+      {
+        "sensor_id": "TEMP_002",
+        "timestamp": "14:32:30",
+        "sensor_type": "temperature",
+        "value": 21.2,
+        "unit": "celsius",
+        "status": "ok",
+        "notes": "located in server room"
+      },
+      {
+        "sensor_id": "PRES_001",
+        "timestamp": "14:32:35",
+        "sensor_type": "pressure",
+        "value": 1015.8,
+        "unit": "hPa",
+        "status": "ok",
+        "notes": "NORMAL"
+      },
+      {
+        "sensor_id": "TEMP_003",
+        "timestamp": "14:32:40",
+        "sensor_type": "temperature",
+        "value": 24.1,
+        "unit": "celsius",
+        "status": "warning",
+        "notes": "battery alert - 15% charge"
+      },
+      {
+        "sensor_id": "HUM_002",
+        "timestamp": "14:32:45",
+        "sensor_type": "humidity",
+        "value": 48.7,
+        "unit": "percent",
+        "status": "ok",
+        "notes": "all systems nominal"
+      }
+    ],
+    "invalid": [
+      {
+        "reading": {
+          "sensor_id": "HUM_003",
+          "timestamp": "14:32:07",
+          "sensor_type": "humidity",
+          "value": null,
+          "unit": null,
+          "status": "error",
+          "notes": "reading failed, timeout after 30s"
+        },
+        "error": "'value' must be numeric, got: NoneType"
+      }
+    ]
+  },
+  "summary": {
+    "total_readings": 10,
+    "valid_count": 9,
+    "invalid_count": 1,
+    "by_type": {
+      "temperature": 5,
+      "humidity": 3,
+      "pressure": 2
+    },
+    "by_status": {
+      "ok": 7,
+      "error": 1,
+      "warning": 2
+    }
+  }
+}

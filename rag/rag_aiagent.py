@@ -54,3 +54,18 @@ def load_file(file_path):
     """
     documents = loader.load()
     return documents 
+
+def splitter(documents):
+    """
+    Splits the PDF text into smaller chunks.
+
+    Smaller chunks make it easier to search for
+    specific information inside large documents.
+    """
+    #1000 = characters incl spaces and punctuation
+    #overlap makes it so context isnt lost in other chunks 
+    RecursiveCharacterTextSplitter(
+        chunks = 1000,
+        chunk_overlap = 200
+        
+    )

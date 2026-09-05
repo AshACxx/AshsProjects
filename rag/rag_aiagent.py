@@ -64,8 +64,21 @@ def splitter(documents):
     """
     #1000 = characters incl spaces and punctuation
     #overlap makes it so context isnt lost in other chunks 
-    RecursiveCharacterTextSplitter(
+    txt_splitter = RecursiveCharacterTextSplitter(
         chunks = 1000,
         chunk_overlap = 200
         
+    )
+    
+    """
+    split.documents is how it actually splits the document, it applies the rules
+    of txt_splitter to documents
+    """
+    chunks = txt_splitter.split_documents(documents)
+    return chunks
+
+def database(chunks):
+    database = Chroma.from_documents(
+        documents = chunks,
+        embedding = embedding_function
     )

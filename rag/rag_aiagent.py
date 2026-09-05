@@ -65,7 +65,7 @@ def splitter(documents):
     #1000 = characters incl spaces and punctuation
     #overlap makes it so context isnt lost in other chunks 
     txt_splitter = RecursiveCharacterTextSplitter(
-        chunks = 1000,
+        chunk_size = 1000,
         chunk_overlap = 200
         
     )
@@ -78,6 +78,12 @@ def splitter(documents):
     return chunks
 
 def database(chunks):
+    """
+    Stores the document chunks inside Chroma.
+
+    Chroma allows us to search the PDF
+    based on meaning instead of exact words.
+    """
     database = Chroma.from_documents(
         documents = chunks,
         embedding = embedding_function
@@ -97,20 +103,46 @@ def ask_question(question, database):
     )
     
     prompt = f"""
-    You are an AI study assistant.
+You are an AI study assistant.
 
-    Answer the question using only the information
-    provided from the uploaded documents.
+Answer the question using only the information
+provided from the uploaded documents.
 
-    If the answer cannot be found in the documents,
-    say that you cannot find enough information.
+If the answer cannot be found in the documents,
+say that you cannot find enough information.
 
-    DOCUMENT INFORMATION:
+DOCUMENT INFORMATION:
 
-    {context}
+{context}
 
-    QUESTION:
+QUESTION:
 
-    {question}
-    """
+{question}
+"""
+    # Sending prompt to llm
+    response = llm.invoke(prompt)
     
+    # Store where the info comes from
+    sources = []
+    
+    # For loop used to get the meta data of the document and returns where the information comes from 
+    for document in results:
+        source = document.metadata.get(
+            'source',
+            'Unknown'
+        )
+        
+        # Getting page metadata
+        page = document.metadata.get(
+            'page',
+            0
+        )
+        
+        # Create a readable source
+        source_text = f"Page {page + 1}"
+        
+        # Prevent the same page being shown repeatedly
+        if source_text not in sources:
+            sources.append(source_text)
+    
+    return response.content, sources  #content is the ais response in a hidden response 

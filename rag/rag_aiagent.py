@@ -26,9 +26,31 @@ from langgraph.prebuilt import create_react_agent
 # Gives the AI conversation memory
 from langgraph.checkpoint.memory import MemorySaver
 
+
+# Ai model that will generate results
 llm = ChatOllama(
     model = "llama3.2",
     temperature = 0 
 )   
 
-embedding_function = HuggingFaceEmbeddings
+# Specifying what embedding model is used 
+# Embedding model converts text into numerical representations.
+# This allows us to compare the user's question with parts of the PDF
+# and find the most relevant information.
+embedding_function = HuggingFaceEmbeddings(
+    model_name="BAAI/bge-small-en-v1.5"
+)
+
+
+# ---------------------------------------------------------
+# LOAD PDF
+# ---------------------------------------------------------
+
+
+def load_file(file_path):
+    loader = PyPDFLoader(file_path)
+    """
+    Loads a PDF and converts each page into a LangChain document.
+    """
+    documents = loader.load()
+    return documents 

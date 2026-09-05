@@ -82,3 +82,35 @@ def database(chunks):
         documents = chunks,
         embedding = embedding_function
     )
+    
+    return database
+
+def ask_question(question, database):
+    results = database.similarity_search(
+        question,
+        k=4
+    )
+    
+    context = "\n\n".join(
+        document.page_content #get the actual text stored inside that document chunk.
+        for document in results
+    )
+    
+    prompt = f"""
+    You are an AI study assistant.
+
+    Answer the question using only the information
+    provided from the uploaded documents.
+
+    If the answer cannot be found in the documents,
+    say that you cannot find enough information.
+
+    DOCUMENT INFORMATION:
+
+    {context}
+
+    QUESTION:
+
+    {question}
+    """
+    

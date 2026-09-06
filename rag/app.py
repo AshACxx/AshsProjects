@@ -4,7 +4,8 @@ import tempfile
 from rag_aiagent import (
     load_file,
     splitter,
-    database,
+    database as create_database,
+
     ask_question
 )
 
@@ -46,7 +47,7 @@ if uploaded_file is not None:
     # Split into chunks
     chunks = splitter(documents)
     # Create Chroma database
-    database = database(chunks)
+    database = create_database(chunks)
 
 
     st.success("PDF processed successfully.")
@@ -74,11 +75,4 @@ if uploaded_file is not None:
 
 
         for source in sources:
-
-            st.write(
-                f"File: {source['source']}"
-            )
-
-            st.write(
-                f"Page: {source['page']}"
-            )
+            st.write(source)

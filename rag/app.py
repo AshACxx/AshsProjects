@@ -1,7 +1,7 @@
 import streamlit as st
 import tempfile
 
-from rag import (
+from rag_aiagent import (
     load_pdf,
     split_documents,
     create_database,

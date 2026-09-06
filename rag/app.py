@@ -38,3 +38,17 @@ if uploaded_file is not None:
         )
 
         temp_path = temp_file.name
+
+          # Load the PDF
+    documents = load_pdf(temp_path)
+
+
+    # Split into chunks
+    chunks = split_documents(documents)
+
+
+    # Create Chroma database
+    database = create_database(chunks)
+
+
+    st.success("PDF processed successfully.")

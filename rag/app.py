@@ -2,9 +2,9 @@ import streamlit as st
 import tempfile
 
 from rag_aiagent import (
-    load_pdf,
-    split_documents,
-    create_database,
+    load_file,
+    splitter,
+    database,
     ask_question
 )
 
@@ -39,16 +39,14 @@ if uploaded_file is not None:
 
         temp_path = temp_file.name
 
-          # Load the PDF
-    documents = load_pdf(temp_path)
 
 
+    # Load the PDF
+    documents = load_file(temp_path)
     # Split into chunks
-    chunks = split_documents(documents)
-
-
+    chunks = splitter(documents)
     # Create Chroma database
-    database = create_database(chunks)
+    database = database(chunks)
 
 
     st.success("PDF processed successfully.")

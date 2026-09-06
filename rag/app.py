@@ -52,3 +52,35 @@ if uploaded_file is not None:
 
 
     st.success("PDF processed successfully.")
+
+    # Let the user ask a question
+    question = st.text_input(
+        "Ask a question about the PDF:"
+    )
+
+
+    if question:
+
+        answer, sources = ask_question(
+            question,
+            database
+        )
+
+
+        st.subheader("Answer")
+
+        st.write(answer)
+
+
+        st.subheader("Sources")
+
+
+        for source in sources:
+
+            st.write(
+                f"File: {source['source']}"
+            )
+
+            st.write(
+                f"Page: {source['page']}"
+            )

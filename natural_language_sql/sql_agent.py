@@ -62,3 +62,48 @@ def get_schema(connection):
             schema += f"- {column_name} ({column_type})\n"
 
     return schema
+
+# ---------------------------------------------------------
+# TURN QUESTION INTO SQL
+# ---------------------------------------------------------
+
+def generate_sql(question, schema):
+
+    prompt = f"""
+You are an SQL assistant.
+
+Convert the user's question into a SQLite SELECT query.
+
+Only generate SQL that reads data.
+
+Do not use:
+DELETE
+DROP
+UPDATE
+INSERT
+ALTER
+CREATE
+
+DATABASE STRUCTURE:
+
+{schema}
+
+USER QUESTION:
+
+{question}
+
+Return ONLY the SQL query.
+Do not explain the query.
+Do not use markdown.
+"""
+
+    response = llm.invoke(prompt)
+
+    sql = response.content.strip()
+
+    # Sometimes AI may still add markdown
+    sql = sql.repace("```sql", "")
+    sql = sql.replace("```", "")
+    sql = sql.strip()
+
+    return sql

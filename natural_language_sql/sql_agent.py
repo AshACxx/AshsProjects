@@ -107,3 +107,25 @@ Do not use markdown.
     sql = sql.strip()
 
     return sql
+
+# ---------------------------------------------------------
+# RUN SQL QUERY
+# ---------------------------------------------------------
+
+def run_query(connection, sql):
+
+    cursor = connection.cursor()
+
+    cursor.execute(sql)
+
+    rows = cursor.fetchall()
+
+    # Get column names
+    column_names = []
+
+    if cursor.description:
+
+        for column in cursor.description:
+            column_names.append(column[0])
+
+    return column_names, rows

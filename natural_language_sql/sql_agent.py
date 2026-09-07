@@ -192,3 +192,38 @@ Give a clear and concise answer to the user's question.
     response = llm.invoke(prompt)
 
     return response.content
+
+
+# ---------------------------------------------------------
+# MAIN QUESTION FUNCTION
+# ---------------------------------------------------------
+
+def ask_database(question, database_path):
+
+    # Connect to database
+    connection = connect_database(database_path)
+
+    try:
+
+        # Get database tables + columns
+        schema = get_schema(connection)
+
+        # Turn English question into SQL
+        sql = generate_sql(
+            question,
+            schema
+        )
+
+        # Make sure AI didn't generate dangerous SQL
+        safe = check_sql(sql)
+
+        if not safe:
+
+            return (
+                "The generated SQL was blocked for safety.",
+                sql,
+                [],
+                []
+            )
+
+  

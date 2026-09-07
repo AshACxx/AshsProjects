@@ -117,7 +117,9 @@ def check_sql(sql):
         "DROP",
         "UPDATE",
         "INSERT",
-  
+        "ALTER",
+        "CREATE",
+        "REPLACE"
     ]
 
     for word in dangerous_words:

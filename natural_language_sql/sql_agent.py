@@ -226,4 +226,36 @@ def ask_database(question, database_path):
                 []
             )
 
-  
+        # Run SQL
+        columns, rows = run_query(
+            connection,
+            sql
+        )
+
+        # Explain results
+        answer = explain_results(
+            question,
+            sql,
+            columns,
+            rows
+        )
+
+        return (
+            answer,
+            sql,
+            columns,
+            rows
+        )
+
+    except Exception as error:
+
+        return (
+            f"An error occurred: {error}",
+            "",
+            [],
+            []
+        )
+
+    finally:
+
+        connection.close()

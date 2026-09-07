@@ -108,6 +108,33 @@ Do not use markdown.
 
     return sql
 
+def check_sql(sql):
+
+    sql_upper = sql.upper().strip()
+
+    dangerous_words = [
+        "DELETE",
+        "DROP",
+        "UPDATE",
+        "INSERT",
+  
+    ]
+
+    for word in dangerous_words:
+
+        if word in sql_upper:
+            return False
+
+    # Only allow queries that read data
+    if not (
+        sql_upper.startswith("SELECT")
+        or sql_upper.startswith("WITH")
+    ):
+        return False
+
+    return True
+
+
 # ---------------------------------------------------------
 # RUN SQL QUERY
 # ---------------------------------------------------------

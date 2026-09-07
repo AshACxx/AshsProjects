@@ -158,3 +158,37 @@ def run_query(connection, sql):
             column_names.append(column[0])
 
     return column_names, rows
+
+# ---------------------------------------------------------
+# EXPLAIN RESULTS
+# ---------------------------------------------------------
+
+def explain_results(question, sql, columns, rows):
+
+    # Prevent massive amounts of database data
+    # from being sent to the model
+    sample_rows = rows[:20]
+
+    prompt = f"""
+You are an AI data analyst.
+
+Explain the database result in simple English.
+
+USER QUESTION:
+{question}
+
+SQL QUERY:
+{sql}
+
+COLUMNS:
+{columns}
+
+RESULTS:
+{sample_rows}
+
+Give a clear and concise answer to the user's question.
+"""
+
+    response = llm.invoke(prompt)
+
+    return response.content

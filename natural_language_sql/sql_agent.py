@@ -102,7 +102,7 @@ Do not use markdown.
     sql = response.content.strip()
 
     # Sometimes AI may still add markdown
-    sql = sql.repace("```sql", "")
+    sql = sql.replace("```sql", "")
     sql = sql.replace("```", "")
     sql = sql.strip()
 

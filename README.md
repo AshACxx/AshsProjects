@@ -1,3 +1,55 @@
+## AI Study Assistant (RAG)
+
+A Retrieval-Augmented Generation (RAG) study assistant built with Python and Streamlit. Users can upload a PDF, ask questions about its contents, and receive answers based on the most relevant sections of the document.
+
+The application also displays the page numbers used as sources for each response.
+
+### Features
+
+- Upload and process PDF documents
+- Split documents into overlapping text chunks
+- Generate embeddings using Hugging Face
+- Store document chunks in a Chroma vector database
+- Retrieve relevant information using similarity search
+- Generate answers locally using Llama 3.2 through Ollama
+- Restrict responses to information found in the uploaded document
+- Display source page numbers
+- Simple Streamlit interface
+
+### Tech Stack
+
+- Python
+- Streamlit
+- LangChain
+- Chroma
+- Hugging Face Embeddings
+- Ollama
+- Llama 3.2
+- PyPDFLoader
+
+### How It Works
+
+```text
+PDF Upload
+    ↓
+PDF Text Extraction
+    ↓
+Text Chunking
+    ↓
+Hugging Face Embeddings
+    ↓
+Chroma Vector Database
+    ↓
+Similarity Search
+    ↓
+Relevant Document Context
+    ↓
+Llama 3.2
+    ↓
+Answer + Source Pages
+
+
+
 # AshsProjects
 Clean new repo for adding previous and upcoming projects 
 # NBA Scoreboard Analyzer

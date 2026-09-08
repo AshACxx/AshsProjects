@@ -2,6 +2,228 @@
 
 A collection of university, personal, and upcoming projects focused on data science, artificial intelligence, machine learning, and software development.
 
+## AI Database Analyst
+
+An AI-powered database assistant built with Python, SQLite, Streamlit, and Ollama.
+
+The application allows users to ask questions about a database using normal English. The system reads the database structure, converts the user's question into SQL, checks that the generated query is safe, executes it, and then explains the results in plain English.
+
+### Features
+
+- Ask database questions using natural language
+- Automatically reads database tables and column structure
+- Converts user questions into SQLite queries
+- Restricts generated SQL to read-only operations
+- Blocks commands such as `DELETE`, `DROP`, `UPDATE`, `INSERT`, and `ALTER`
+- Executes valid SQL queries against the database
+- Displays results in a pandas DataFrame
+- Shows the generated SQL query
+- Uses Llama 3.2 locally through Ollama
+- Generates a simple explanation of the returned results
+
+### Tech Stack
+
+- Python
+- SQLite
+- SQL
+- Streamlit
+- pandas
+- LangChain
+- Ollama
+- Llama 3.2
+
+### How It Works
+
+```text
+User Question
+    ↓
+Read Database Schema
+    ↓
+Llama 3.2
+    ↓
+Generate SQL Query
+    ↓
+SQL Safety Check
+    ↓
+Execute Query
+    ↓
+Return Database Results
+    ↓
+Llama 3.2
+    ↓
+Natural Language Explanation
+```
+### Demo
+
+Below is an example of the application analysing the Northwind SQLite database using a natural-language question.
+
+![AI Database Analyst Demo](assets/sql-database-analyst.png)
+
+The application converts the user's question into SQL, executes the query against the database, displays the returned data, and generates a natural-language explanation of the results.
+
+### Database Schema Detection
+
+Before generating a query, the application reads the SQLite database structure.
+
+It retrieves:
+
+- Table names
+- Column names
+- Column data types
+
+This information is passed to the language model so that it can generate SQL based on the actual structure of the database.
+
+### Natural Language to SQL
+
+The user's question is passed to Llama 3.2 along with the database schema.
+
+For example:
+
+```text
+Which customers have placed the most orders?
+```
+
+The model generates an appropriate SQLite query based on the available tables and columns.
+
+### SQL Safety
+
+Before a generated query is executed, it passes through a validation step.
+
+The application blocks SQL containing operations such as:
+
+```text
+DELETE
+DROP
+UPDATE
+INSERT
+ALTER
+CREATE
+REPLACE
+```
+
+Only queries beginning with:
+
+```sql
+SELECT
+```
+
+or:
+
+```sql
+WITH
+```
+
+are allowed to run.
+
+This prevents the AI from intentionally or accidentally modifying the database.
+
+### Query Results
+
+After the SQL query is executed, the application retrieves:
+
+- Column names
+- Returned rows
+
+The results are then displayed in a pandas DataFrame through the Streamlit interface.
+
+### Result Explanation
+
+The generated SQL and database results are passed back to Llama 3.2.
+
+The model then converts the raw database output into a short, readable answer to the user's original question.
+
+To avoid sending unnecessarily large amounts of data to the model, the explanation step uses a maximum of the first 20 returned rows.
+
+### Project Files
+
+```text
+AI-Database-Analyst/
+├── sqlapp.py
+└── sql_agent.py
+```
+
+#### `sqlapp.py`
+
+Handles the Streamlit interface, including:
+
+- User questions
+- Database location
+- Displaying generated answers
+- Displaying query results
+- Showing generated SQL
+
+#### `sql_agent.py`
+
+Contains the main database and AI logic, including:
+
+- SQLite connection
+- Database schema detection
+- Natural-language-to-SQL generation
+- SQL validation
+- Query execution
+- Result explanation
+
+### Example Questions
+
+Examples of questions the application could handle include:
+
+```text
+Which products are the most expensive?
+```
+
+```text
+How many customers are in each country?
+```
+
+```text
+Which employees have processed the most orders?
+```
+
+```text
+What are the top five products by price?
+```
+
+The generated SQL depends on the structure and contents of the connected database.
+
+### Current Limitations
+
+- Currently designed for SQLite databases
+- Uses a fixed database location in the Streamlit application
+- SQL validation is based on query text and allowed starting commands
+- Generated SQL accuracy depends on the language model understanding the database schema
+- The result explanation only sends the first 20 rows to the model
+- Llama 3.2 must be running locally through Ollama
+
+### Future Improvements
+
+Possible improvements include:
+
+- Allow users to upload their own SQLite databases
+- Improve SQL validation using SQL parsing
+- Add support for additional database systems
+- Add charts and automatic data visualisations
+- Add conversation history
+- Add example question suggestions
+- Improve error handling for invalid generated SQL
+- Add automated tests
+- Deploy the Streamlit interface
+
+### What It Demonstrates
+
+This project demonstrates experience with:
+
+- SQL and relational databases
+- Natural language to SQL
+- Database schema inspection
+- LLM integration
+- Query validation and safety
+- Data processing with pandas
+- Streamlit application development
+- Building AI tools around structured data
+
+
+
+
 ---
 
 ## AI Study Assistant (RAG)

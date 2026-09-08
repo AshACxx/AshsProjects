@@ -1,3 +1,9 @@
+# AshsProjects
+
+A collection of university, personal, and upcoming projects focused on data science, artificial intelligence, machine learning, and software development.
+
+---
+
 ## AI Study Assistant (RAG)
 
 A Retrieval-Augmented Generation (RAG) study assistant built with Python and Streamlit. Users can upload a PDF, ask questions about its contents, and receive answers based on the most relevant sections of the document.
@@ -47,93 +53,89 @@ Relevant Document Context
 Llama 3.2
     ↓
 Answer + Source Pages
+```
 
+The PDF is split into smaller chunks and converted into embeddings. These embeddings are stored in Chroma and searched when the user asks a question. The most relevant sections are then passed to Llama 3.2, which generates an answer based only on the retrieved document content.
 
+---
 
-# AshsProjects
-Clean new repo for adding previous and upcoming projects 
-# NBA Scoreboard Analyzer
+## NBA Scoreboard Analyzer
 
-This is a Python project where I use an NBA API to get live game data and analyse it.
+A Python project that retrieves live NBA game data through an API and performs basic analysis on the results.
 
-## What it does
+### Features
 
-- Fetches real-time NBA game data using an API
-- Extracts data from nested JSON
-- Prints all games played today
-- Finds the highest scoring game
-- Detects if any games went to overtime
-- Converts the data into a pandas DataFrame for easier analysis
+- Fetches real-time NBA game data
+- Extracts information from nested JSON
+- Displays games played on the current day
+- Finds the highest-scoring game
+- Detects overtime games
+- Converts game data into a pandas DataFrame for further analysis
 
-## Tech used
+### Tech Stack
 
 - Python
-- requests (for API calls)
-- pandas (for data handling)
+- Requests
+- pandas
+- REST APIs
+- JSON
 
-## How to run
+### Example Analysis
 
-1. Install dependencies:
+The program can return:
 
+- Games played today
+- Highest-scoring game
+- Overtime games
+- Structured game data in a pandas DataFrame
 
-## Example output
+### Project Type
 
-- List of games played today
-- Highest scoring game
-- Overtime games (if any)
-- DataFrame of all games
+API integration and data analysis project.
 
-## Project type
+### Notes
 
-This is an API integration + data analysis project.
+- Data is retrieved from the NBA API
+- JSON responses can be saved locally for debugging and reuse
 
-## Notes
+### Future Improvements
 
-- Data comes from the official NBA public API
-- JSON data is saved locally for debugging and reuse
-
-## Future improvements
-
-- Add more stats (lowest score, biggest margin, averages)
-- Add visualisations (charts)
-- Improve structure and reduce repetition in code
-
-
-# Ammonia Sensor Data Analysis Project
-
-This project simulates ammonia (NH₃) sensor readings and performs data analysis using NumPy and pandas. It also exports the data into a JSON file for reuse.
+- Add average scores and scoring statistics
+- Calculate winning margins
+- Add team-level analysis
+- Add charts and visualisations
+- Improve code structure and reduce repetition
 
 ---
 
-## Overview
+## Ammonia Sensor Data Analysis
 
-The program generates random ammonia readings between 0 and 20 ppm for multiple sensors. Each sensor contains 1800 samples, creating a realistic dataset.
+A data analysis project that simulates ammonia (NH₃) sensor readings using NumPy and analyses the generated data using pandas.
 
-The data is then analysed using statistical methods and structured into useful formats.
+### Overview
 
----
+The program generates ammonia readings between 0 and 20 ppm across multiple sensors.
 
-## Features
+Each sensor contains 1,800 samples, creating a dataset that can be used for statistical analysis and outlier detection.
 
-- Generates random sensor data using NumPy  
-- Calculates:
-  - Mean (average)
-  - Standard deviation (spread)
-  - Min and Max values
+### Features
+
+- Generates simulated sensor readings using NumPy
+- Calculates descriptive statistics including:
+  - Mean
+  - Standard deviation
+  - Minimum
+  - Maximum
   - Median
-- Computes z-scores to measure deviation from the mean  
-- Detects outliers using:
+- Calculates z-scores
+- Detects statistical outliers
+- Identifies which sensor contains the most outliers
+- Converts the data into structured pandas DataFrames
+- Exports sensor readings to JSON
 
+### JSON Structure
 
-- Identifies which sensor has the most outliers  
-- Exports all readings to a JSON file  
-- Uses pandas to group and summarise sensor data  
-
----
-
-## JSON Output
-
-Each reading is stored as:
+Each sensor reading is stored in the following format:
 
 ```json
 {
@@ -144,125 +146,152 @@ Each reading is stored as:
 }
 ```
 
+### Tech Stack
 
+- Python
+- NumPy
+- pandas
+- JSON
 
-# Titanic Data Cleaning and Analysis
+### What It Demonstrates
 
-This project focuses on cleaning and analysing the Titanic dataset using pandas, NumPy, and data visualisation tools.
-
-The goal is to handle missing data, create meaningful features, and extract insights about survival patterns.
-
----
-
-## Overview
-
-The dataset is first loaded and inspected for missing values. Key columns such as `Cabin`, `Age`, and `Embarked` are cleaned using different techniques.
-
-New features are then created to improve analysis, such as whether a passenger had a cabin, their age group, and family size.
-
----
-
-## Data Cleaning Steps
-
-### Cabin
-- The `Cabin` column contains many missing values  
-- A new feature `HasCabin` is created:
-  - `1` = passenger had a cabin  
-  - `0` = no cabin  
-- The original `Cabin` column is then removed  
+- Data simulation
+- Statistical analysis
+- Outlier detection
+- Data transformation
+- JSON data handling
+- pandas DataFrame operations
 
 ---
 
-### Age
-- Missing `Age` values are filled using **median grouped by Pclass and Sex**
-- This keeps the data more realistic compared to using a single average  
-- Any remaining missing values are filled with the overall median  
+## Titanic Data Cleaning and Analysis
+
+A data cleaning and exploratory analysis project using the Titanic dataset.
+
+The project focuses on handling missing values, creating new features, and analysing patterns that may have influenced passenger survival.
+
+### Data Cleaning
+
+#### Cabin
+
+The `Cabin` column contains a large number of missing values.
+
+A new feature called `HasCabin` is created:
+
+- `1` = passenger had recorded cabin information
+- `0` = no recorded cabin information
+
+The original `Cabin` column is then removed.
+
+#### Age
+
+Missing `Age` values are filled using the median age grouped by:
+
+- Passenger class (`Pclass`)
+- Sex
+
+Any remaining missing values are filled using the overall median age.
+
+#### Embarked
+
+Missing values in `Embarked` are filled using the mode, representing the most common embarkation location.
+
+### Feature Engineering
+
+#### Age Groups
+
+Passengers are grouped into age categories:
+
+- Child: 0–13
+- Teen: 13–18
+- Adult: 18–35
+- Middle-aged: 35–60
+- Senior: 60+
+
+This makes it easier to compare survival rates between different age groups.
+
+#### Family Features
+
+Two additional features are created:
+
+```text
+FamilySize = Parch + SibSp + 1
+```
+
+`IsAlone` is used to identify whether a passenger travelled alone or with family.
+
+### Analysis Performed
+
+- Survival rate based on cabin availability
+- Passenger age distribution
+- Survival rate by age group
+- Survival comparison between solo travellers and passengers travelling with family
+
+### Visualisation
+
+A histogram is used to examine the distribution of passenger ages and understand which age ranges were most common.
+
+### Tech Stack
+
+- Python
+- pandas
+- NumPy
+- seaborn
+- matplotlib
+
+### Key Insights
+
+The analysis explores relationships between:
+
+- Cabin availability and survival
+- Passenger age and survival
+- Family size and survival
+- Travelling alone compared with travelling with family
+
+### What It Demonstrates
+
+- Data cleaning and preprocessing
+- Missing-value handling
+- Feature engineering
+- Exploratory data analysis
+- Statistical analysis
+- Data visualisation
 
 ---
 
-### Embarked
-- Missing values are filled using the **mode (most common value)**  
+## Technologies Used Across Projects
+
+### Programming
+
+- Python
+- SQL
+- C
+- R
+- PHP
+- HTML
+
+### Data & Machine Learning
+
+- pandas
+- NumPy
+- TensorFlow
+- Hugging Face
+- Chroma
+- Tableau
+- Orange
+
+### AI & Development
+
+- LangChain
+- Ollama
+- Streamlit
+- Git
+- GitHub
 
 ---
 
-## Feature Engineering
+## About
 
-### Age Groups
-Passengers are grouped into categories:
+These projects were created while studying Data Science and Artificial Intelligence at Technological University Dublin.
 
-- Child (0–13)  
-- Teen (13–18)  
-- Adult (18–35)  
-- Middle-aged (35–60)  
-- Senior (60+)  
-
-This makes it easier to analyse survival trends.
-
----
-
-### Family Features
-- `FamilySize` = Parch + SibSp + 1  
-- `IsAlone` = 1 if passenger travelled alone, else 0  
-
-This helps analyse how travelling alone vs with family affects survival.
-
----
-
-## Analysis Performed
-
-- Survival rate based on cabin availability  
-- Age distribution (visualised using a histogram)  
-- Survival rate by age group  
-- Survival comparison between solo travellers and families  
-
----
-
-## Visualisation
-
-A histogram is used to show the distribution of passenger ages:
-
-- Helps understand the spread of ages  
-- Shows where most passengers fall  
-
----
-
-## Technologies Used
-
-- Python  
-- pandas  
-- NumPy  
-- seaborn  
-- matplotlib  
-
----
-
-## How to Run
-
-1. Install dependencies:
-
-2. Run the script:
-
-3. Make sure the dataset is located at:
-
-
----
-
-## Key Insights
-
-- Passengers with cabins had higher survival rates  
-- Age plays a role in survival probability  
-- Travelling alone vs with family affects survival chances  
-
----
-
-## Summary
-
-This project demonstrates:
-
-- Data cleaning and preprocessing  
-- Handling missing values  
-- Feature engineering  
-- Data visualisation  
-- Exploratory data analysis  
-
-It shows how raw data can be transformed into meaningful insights using Python.
+The repository will continue to be updated with new projects covering data science, machine learning, AI, and software development.

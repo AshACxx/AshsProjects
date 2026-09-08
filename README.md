@@ -276,6 +276,13 @@ Llama 3.2
     ↓
 Answer + Source Pages
 ```
+### Demo
+
+Below is an example of the application answering a question about an uploaded CV.
+
+![AI Study Assistant Demo](assets/rag-study-assistant.png)
+
+The application retrieves information from the uploaded PDF, generates an answer based on the relevant document content, and displays the page used as the source.
 
 The PDF is split into smaller chunks and converted into embeddings. These embeddings are stored in Chroma and searched when the user asks a question. The most relevant sections are then passed to Llama 3.2, which generates an answer based only on the retrieved document content.
 

@@ -10,3 +10,17 @@ print(df.head())
 print("="*60)
 print("Looking for null values")
 print("="*60)
+
+print(f"{df.isnull().sum()} values")
+
+print(f"This dataset contains {df.shape}")
+
+print(df.info())
+
+
+print("="*60)
+print("cleaning Total Charges")
+print("="*60)
+
+df['TotalCharges'] = pd.to_numeric(df['TotalCharges'], errors = 'coerce')
+print(df.isnull().sum())

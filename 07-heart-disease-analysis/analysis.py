@@ -51,3 +51,22 @@ for col in ['sex', 'age', 'ca', 'thal']:
 
 sns.heatmap(df.corr(), annot=True, fmt='.2f', cmap='coolwarm', center=0)
 plt.show()
+
+
+
+
+#TRAINING AND TESTING
+
+X = df.drop(columns = 'target')
+y = df['target']
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, stratify = y, random_state= 42)
+print(f"\nTrain size: {len(X_train)}, Test size: {len(X_test)}")
+
+standardizer = StandardScaler()
+
+X_train['age'] = standardizer.fit_transform(X_train['age'].values.reshape(-1, 1))
+X_test['age'] = standardizer.transform(X_test['age'].values.reshape(-1, 1))
+
+sns.histplot(data = X_train, x = 'age')
+plt.show()

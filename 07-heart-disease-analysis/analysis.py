@@ -17,6 +17,8 @@ print(checkNa)
 
 #printing how many rows equal or exceed 500
 condition = (df['sex'] == 0) & (df['chol'] >= 500)
+
+print("\n")
 print(df[condition].index)
 
 print(df['chol'].describe())

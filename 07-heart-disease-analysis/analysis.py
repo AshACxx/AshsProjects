@@ -11,9 +11,15 @@ df = pd.read_csv('07-heart-disease-analysis/data/heart.csv')
 checkChol = (df['chol'] == 0).sum()
 print(f"There are {checkChol} rows that equal to 0")
 
-
-
+checkNa = df.isna().sum()
+print(checkNa)
 #print(df.head())
+
+#printing how many rows equal or exceed 500
+condition = (df['sex'] == 0) & (df['chol'] >= 500)
+print(df[condition].index)
+
+print(df['chol'].describe())
 
 #print(df.isnull().sum())
 

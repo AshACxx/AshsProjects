@@ -7,6 +7,7 @@ import sklearn
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.feature_selection import SelectFromModel
+from sklearn.ensemble import RandomForestClassifier
 
 df = pd.read_csv('07-heart-disease-analysis/data/heart.csv')
 checkChol = (df['chol'] == 0).sum()
@@ -71,3 +72,6 @@ X_test['age'] = standardizer.transform(X_test['age'].values.reshape(-1, 1))
 
 sns.histplot(data = X_train, x = 'age')
 plt.show()
+
+rf = RandomForestClassifier(n_jobs = -1, class_weight = 'balanced', map_depth = 5)
+rf.fit(X_train, y_train)

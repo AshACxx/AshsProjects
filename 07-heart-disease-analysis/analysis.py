@@ -48,3 +48,6 @@ plt.show()
 for col in ['sex', 'age', 'ca', 'thal']:
     sns.countplot(data = df, x = col, hue = 'target')
     plt.show()
+
+sns.heatmap(df.corr(), annot=True, fmt='.2f', cmap='coolwarm', center=0)
+plt.show()

@@ -13,17 +13,38 @@ print(f"There are {checkChol} rows that equal to 0")
 
 checkNa = df.isna().sum()
 print(checkNa)
-#print(df.head())
-
-#printing how many rows equal or exceed 500
-condition = (df['sex'] == 0) & (df['chol'] >= 500)
 
 print("\n")
-print(df[condition].index)
 
+print(df.head())
+
+print("\n")
+sns.histplot(data = df, x = 'ca', bins = 4)
+plt.show()
+sns.boxplot(data = df, x = 'sex', y = 'chol')
+plt.show()
+#printing how many rows equal or exceed 500
+condition = (df['sex'] == 0) & (df['chol'] >= 500)
+print(f"The index of cholestrol equal or above 500 are: {df[condition].index}")
 print(df['chol'].describe())
 
 #print(df.isnull().sum())
 
-sns.boxplot(data = df, x = 'sex', y = 'chol')
+#checking chol from asc
+print(df['chol'].sort_values(ascending= False).head(10))
+
+print("\n")
+
+targetCounts = df['target'].value_counts()
+print(targetCounts)
+
+#getting rid of 4 since its not a real value
+
+df.loc[df['ca'] == 4, 'ca'] = np.nan
+print(df['ca'].value_counts())
+sns.histplot(data = df, x = 'ca')
 plt.show()
+
+for col in ['sex', 'age', 'ca', 'thal']:
+    sns.countplot(data = df, x = col, hue = 'target')
+    plt.show()

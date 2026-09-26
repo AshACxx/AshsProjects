@@ -6,6 +6,7 @@ import csv
 import sklearn
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
+from sklearn.feature_selection import SelectFromModel
 
 df = pd.read_csv('07-heart-disease-analysis/data/heart.csv')
 checkChol = (df['chol'] == 0).sum()

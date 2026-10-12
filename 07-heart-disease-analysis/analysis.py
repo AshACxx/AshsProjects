@@ -12,6 +12,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.linear_model import LinearRegression
 from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsTransformer
+from sklearn.metrics import classification_report
 
 df = pd.read_csv('07-heart-disease-analysis/data/heart.csv')
 checkChol = (df['chol'] == 0).sum()
@@ -49,6 +50,7 @@ print(targetCounts)
 
 df.loc[df['ca'] == 4, 'ca'] = np.nan
 print(df['ca'].value_counts())
+df = df.dropna(subset=['ca'])   # remove rows where ca was invalid
 sns.histplot(data = df, x = 'ca')
 plt.show()
 
@@ -90,9 +92,12 @@ knn = KNeighborsClassifier(n_neighbors= 5)
 knn.fit(X_train_s, y_train)
 knn_pred = knn.predict(X_test_s)
 
-sns.histplot(data = X_train, x = 'age')
-plt.show()
-
 rf = RandomForestClassifier(n_jobs = -1, class_weight = 'balanced', max_depth = 5, random_state = 42)
 rf.fit(X_train, y_train)
 rf_pred = rf.predict(X_test)
+
+
+
+for name, pred in [('Logistic regression', lr_pred), ('kNN', knn_pred), ('Random forest', rf_pred)]:
+    print(f"\n{name}")
+    print(classification_report(y_test, pred))

@@ -8,6 +8,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.feature_selection import SelectFromModel
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LinearRegression
 
 df = pd.read_csv('07-heart-disease-analysis/data/heart.csv')
 checkChol = (df['chol'] == 0).sum()
@@ -61,17 +62,19 @@ plt.show()
 
 X = df.drop(columns = 'target')
 y = df['target']
-
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, stratify = y, random_state= 42)
 print(f"\nTrain size: {len(X_train)}, Test size: {len(X_test)}")
 
 standardizer = StandardScaler()
-
 X_train['age'] = standardizer.fit_transform(X_train['age'].values.reshape(-1, 1))
 X_test['age'] = standardizer.transform(X_test['age'].values.reshape(-1, 1))
+
+lr = LinearRegression()
+lr.fit(X_train, y_train)
+lr_pred = lr.predict(X_test)
 
 sns.histplot(data = X_train, x = 'age')
 plt.show()
 
-rf = RandomForestClassifier(n_jobs = -1, class_weight = 'balanced', map_depth = 5)
+rf = RandomForestClassifier(n_jobs = -1, class_weight = 'balanced', max_depth = 5)
 rf.fit(X_train, y_train)

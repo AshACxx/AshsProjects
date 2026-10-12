@@ -76,17 +76,15 @@ standardizer = StandardScaler()
 X_train_s = standardizer.fit_transform(X_train)
 X_test_s = standardizer.transform(X_test)
 
-numeric = ['age', 'trestbps', 'chol', 'thalach', 'oldpeak', 'ca']
 
-X_train['numeric'] = standardizer.fit_transform(X_train['age'].values.reshape(-1, 1))
-X_test['numeric'] = standardizer.transform(X_test['age'].values.reshape(-1, 1))
 
 #lr = LinearRegression()
 #lr.fit(X_train, y_train)
 #lr_pred = lr.predict(X_test)
 
-knn = KNeighborsClassifer(n_neighbors= 5)
+knn = KNeighborsClassifier(n_neighbors= 5)
 knn.fit(X_train_s, y_train)
+knn_pred = knn.predict(X_test_s)
 
 sns.histplot(data = X_train, x = 'age')
 plt.show()

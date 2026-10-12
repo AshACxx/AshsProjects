@@ -62,7 +62,8 @@ plt.show()
 #one hot encoding for categorical columns 
 disease = pd.get_dummies(df, columns = ['cp', 'thal', 'slope', 'restecg'], drop_first = True)
 
-
+# X = features / predictors (age, chol, cp, etc.) -> what the model predicts FROM
+# y = target / label (0 = no disease, 1 = disease) -> what the model predicts
 
 #TRAINING AND TESTING
 
@@ -71,16 +72,18 @@ y = disease['target']
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, stratify = y, random_state= 42)
 print(f"\nTrain size: {len(X_train)}, Test size: {len(X_test)}")
 
-#standardizing the testing and training data
+# scale for kNN and logistic regression
 standardizer = StandardScaler()
 X_train_s = standardizer.fit_transform(X_train)
 X_test_s = standardizer.transform(X_test)
 
+#plotting the xtrain data on age 
+sns.histplot(data=X_train, x='age')
+plt.show()
 
-
-#lr = LinearRegression()
-#lr.fit(X_train, y_train)
-#lr_pred = lr.predict(X_test)
+lr = LogisticRegression(max_iter= 1000)
+lr.fit(X_train_s, y_train)
+lr_pred = lr.predict(X_test_s)
 
 knn = KNeighborsClassifier(n_neighbors= 5)
 knn.fit(X_train_s, y_train)

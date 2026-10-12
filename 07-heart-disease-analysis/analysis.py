@@ -70,9 +70,9 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, strat
 print(f"\nTrain size: {len(X_train)}, Test size: {len(X_test)}")
 
 standardizer = StandardScaler()
-
-X_train['age'] = standardizer.fit_transform(X_train['age'].values.reshape(-1, 1))
-X_test['age'] = standardizer.transform(X_test['age'].values.reshape(-1, 1))
+numeric = ['age', 'trestbps', 'chol', 'thalach', 'oldpeak', 'ca']
+X_train['numeric'] = standardizer.fit_transform(X_train['age'].values.reshape(-1, 1))
+X_test['numeric'] = standardizer.transform(X_test['age'].values.reshape(-1, 1))
 
 lr = LinearRegression()
 lr.fit(X_train, y_train)

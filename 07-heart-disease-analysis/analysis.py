@@ -8,6 +8,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.feature_selection import SelectFromModel
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.neighbors import KNeighborsClassifier
 from sklearn.linear_model import LinearRegression
 from sklearn.neighbors import KNeighborsTransformer
 
@@ -70,9 +71,11 @@ y = disease['target']
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, stratify = y, random_state= 42)
 print(f"\nTrain size: {len(X_train)}, Test size: {len(X_test)}")
 
+#standardizing the testing and training data
 standardizer = StandardScaler()
-X_train_s = 
-X_test_s = 
+X_train_s = standardizer.fit_transform(X_train)
+X_test_s = standardizer.transform(X_test)
+
 numeric = ['age', 'trestbps', 'chol', 'thalach', 'oldpeak', 'ca']
 
 X_train['numeric'] = standardizer.fit_transform(X_train['age'].values.reshape(-1, 1))
@@ -82,8 +85,8 @@ X_test['numeric'] = standardizer.transform(X_test['age'].values.reshape(-1, 1))
 #lr.fit(X_train, y_train)
 #lr_pred = lr.predict(X_test)
 
-knn = KNeighborsTransformer(n_neighbors= 5)
-knn.fit(X_train)
+knn = KNeighborsClassifer(n_neighbors= 5)
+knn.fit(X_train_s, y_train)
 
 sns.histplot(data = X_train, x = 'age')
 plt.show()

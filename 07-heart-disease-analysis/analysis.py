@@ -10,6 +10,7 @@ from sklearn.feature_selection import SelectFromModel
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsTransformer
 
 df = pd.read_csv('07-heart-disease-analysis/data/heart.csv')
@@ -92,5 +93,6 @@ knn_pred = knn.predict(X_test_s)
 sns.histplot(data = X_train, x = 'age')
 plt.show()
 
-rf = RandomForestClassifier(n_jobs = -1, class_weight = 'balanced', max_depth = 5)
+rf = RandomForestClassifier(n_jobs = -1, class_weight = 'balanced', max_depth = 5, random_state = 42)
 rf.fit(X_train, y_train)
+rf_pred = rf.predict(X_test)
